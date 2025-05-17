@@ -1,8 +1,13 @@
 import { Token } from './tokenizer'
 
-export type Tree =
-  | { type: 'Number'; value: number }
-  | { type: 'BinaryOperation'; left: Tree; right: Tree; operator: string }
+export type NumberNode = { type: 'Number'; value: number }
+export type BinaryOperationNode = {
+  type: 'BinaryOperation'
+  left: Tree
+  right: Tree
+  operator: string
+}
+export type Tree = NumberNode | BinaryOperationNode
 
 export class Parser {
   static parse(tokens: Token[]): Tree {
@@ -35,7 +40,7 @@ export class Parser {
 export class ExpectedCloseParenthesisError extends Error {
   constructor(token: Token) {
     super(
-      `Expected "(" but "${token.value}" was found at ${token.file}:${token.row}:${token.column}`,
+      `Expected ")" but "${token.value}" was found at ${token.file}:${token.row}:${token.column}`,
     )
   }
 }
