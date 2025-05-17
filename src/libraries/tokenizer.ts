@@ -5,6 +5,7 @@ export interface Token {
     rule: string
     column: number
     row: number
+    file: string
 }
 
 export class UnexpectedCharacterError extends Error {
@@ -43,6 +44,14 @@ export class Tokenizer {
                 throw new UnexpectedCharacterError(characters[position])
             }
         }
+        
+        tokens.push({
+            value: 'EOF',
+            rule: 'EOF',
+            column: tokens[tokens.length - 1].column,
+            row: tokens[tokens.length - 1].row,
+            file: tokens[tokens.length - 1].file
+        })
         return tokens
     }
 }
