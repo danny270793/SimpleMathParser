@@ -9,6 +9,27 @@ export class Parser {
         const parser: ASTParser = new ASTParser(tokens);
         return parser.parse();
     }
+    static eval(tree: Tree): number {
+        switch (tree.type) {
+            case "Number":
+                return tree.value;
+            case "BinaryOperation":
+                const left: number = this.eval(tree.left);
+                const right: number = this.eval(tree.right);
+                switch (tree.operator) {
+                    case "+":
+                        return left + right;
+                    case "-":
+                        return left - right;
+                    case "*":
+                        return left * right;
+                    case "/":
+                        return left / right;
+                    default:
+                        throw new Error(`Unknown operator: ${tree.operator}`);
+                }
+        }
+    }
 }
 
 export class ExpectedCloseParenthesisError extends Error {
