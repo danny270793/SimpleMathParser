@@ -8,7 +8,8 @@ function checkOptions(ruleName: string, options: string[], characters: Character
                 value: characters[position].character,
                 rule: ruleName,
                 column: characters[position].column,
-                row: characters[position].row
+                row: characters[position].row,
+                file: characters[position].file
             },
             position: position + 1
         }
@@ -19,7 +20,7 @@ function checkOptions(ruleName: string, options: string[], characters: Character
     }
 }
 
-class Number implements Rule {
+export class Number implements Rule {
     getNext(characters: Character[], position: number): NextReturn {
         const value: Character[] = []
 
@@ -42,20 +43,28 @@ class Number implements Rule {
                 value: value.map((value: Character) => value.character).join(''),
                 rule: this.constructor.name,
                 column: value[0].column,
-                row: value[0].row
+                row: value[0].row,
+                file: value[0].file
             },
             position
         }
     }
 }
 
-class MathOperator implements Rule {
+export class MathOperator implements Rule {
     getNext(characters: Character[], position: number): NextReturn {
         return checkOptions(this.constructor.name, ['+', '-', '/', '*'], characters, position)
     }
 }
 
+export class Symbol implements Rule {
+    getNext(characters: Character[], position: number): NextReturn {
+        return checkOptions(this.constructor.name, ['(', ')'], characters, position)
+    }
+}
+
 export const rules: Rule[] = [
     new Number(),
-    new MathOperator()
+    new MathOperator(),
+    new Symbol()
 ]
