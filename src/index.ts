@@ -20,3 +20,6 @@ tokens.forEach((token: Token) => {
 console.log('\nTree:')
 const tree: Tree = Parser.parse(tokens)
 console.log(JSON.stringify(tree, null, 2))
+
+const result: number = Parser.eval(tree)
+console.log(`\nResult: ${result}`)
