@@ -21,7 +21,31 @@ function checkOptions(ruleName: string, options: string[], characters: Character
 
 class Number implements Rule {
     getNext(characters: Character[], position: number): NextReturn {
-        return checkOptions(this.constructor.name, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'], characters, position)
+        const value: Character[] = []
+
+        while(/^[0-9]$/.test(characters[position].character)) {
+            value.push(characters[position])
+            position += 1
+
+            if(position === characters.length) {
+                break
+            }
+        }
+        if(value.length === 0) {
+            return {
+                token: undefined,
+                position
+            }
+        }
+        return {
+            token: {
+                value: value.map((value: Character) => value.character).join(''),
+                rule: this.constructor.name,
+                column: value[0].column,
+                row: value[0].row
+            },
+            position
+        }
     }
 }
 
@@ -39,12 +63,12 @@ const rules: Rule[] = [
 const expression: string = '12+23'
 
 const characters: Character[] = Characterizer.characterize(expression, 'std::in')
-const tokens: Token[] = Tokenizer.tokenize(characters, rules)
 console.log('Characters:')
 characters.forEach((character: Character) => {
     console.log(character)
 })
 
+const tokens: Token[] = Tokenizer.tokenize(characters, rules)
 console.log('Tokens:')
 tokens.forEach((token: Token) => {
     console.log(token)
