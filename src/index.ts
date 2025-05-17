@@ -1,20 +1,23 @@
-import { Character, Characterizer } from "./libraries/characterizer"
-import { Parser, Tree } from "./libraries/parser"
-import { rules } from "./libraries/rules"
-import { Token, Tokenizer } from "./libraries/tokenizer"
+import { Character, Characterizer } from './libraries/characterizer'
+import { Parser, Tree } from './libraries/parser'
+import { rules } from './libraries/rules'
+import { Token, Tokenizer } from './libraries/tokenizer'
 
 const expression: string = '12+(23-45)/67*89'
 
 console.log('Characters:')
-const characters: Character[] = Characterizer.characterize(expression, 'std::in')
+const characters: Character[] = Characterizer.characterize(
+  expression,
+  'std::in',
+)
 characters.forEach((character: Character) => {
-    console.log(character)
+  console.log(character)
 })
 
 console.log('\nTokens:')
 const tokens: Token[] = Tokenizer.tokenize(characters, rules)
 tokens.forEach((token: Token) => {
-    console.log(token)
+  console.log(token)
 })
 
 console.log('\nTree:')
