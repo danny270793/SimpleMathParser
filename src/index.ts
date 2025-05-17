@@ -1,4 +1,5 @@
 import { Character, Characterizer } from "./libraries/characterizer"
+import { Parser, Tree } from "./libraries/parser"
 import { NextReturn, Rule, Token, Tokenizer } from "./libraries/tokenizer"
 
 function checkOptions(ruleName: string, options: string[], characters: Character[], position: number): NextReturn {
@@ -73,3 +74,7 @@ console.log('Tokens:')
 tokens.forEach((token: Token) => {
     console.log(token)
 })
+
+const tree: Tree = Parser.parse(tokens)
+console.log('tree:')
+console.log(tree)
